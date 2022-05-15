@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+    	<meta charset="utf-8">
+    	<meta name="description" content="Your description goes here">
+    	<meta name="keywords" content="one, two, three">
+
+		<title>Blank Template</title>
+
+		<!-- external CSS link -->
+		<link rel="stylesheet" href="css/normalize.css">
+		<link rel="stylesheet" href="css/style.css">
+	</head>
+	<body>
+
+		<!-- Eventually there will be a way to clear cached local storage, for now, main.js checks if local storage exists, if not, it prompts for these values
+		<input id='bridgeIP' type="text" placeholder="bridge IP">
+		<input id='bridgeUser' type="password" placeholder="user">
+		<button id ='submitBridgeInfo' name="submitBridgeInfo">Save</button>
+		-->
+
+		<!-- the button name is used by main.js and should be the bridge.js property name that gets that item -->
+		<button class="getInfo" id ='getGroups' name="groups">getGroups</button>
+		<button class="getInfo" id ='getLights' name="lights">getLights</button>
+		<button class="getInfo" id ='getConfigs' name="config">getConfigs</button>
+		<button class="getInfo" id ='getSchedules' name="schedules">getSchedules</button>
+		<button class="getInfo" id ='getScenes' name="scenes">getScenes</button>
+		<button class="getInfo" id ='getSensors' name="sensors">getSensors</button>
+		<button class="getInfo" id ='getRules' name="rules">getRules</button>
+
+		<section>
+			<h1 id="responseHeader">Response</h1>
+			<p id = 'tempResponse'>Response will show here</p>
+		</section>
+
+		
+		<script type="text/javascript" src="js/bridge.js"></script>
+		<script type="text/javascript" src="js/light.js"></script>
+		<script type="text/javascript" src="js/main.js"></script>
+	</body>
+</html>

@@ -6,7 +6,6 @@ for ( i=0; i<getButtons.length;i++) {
 }
 
 if (!localStorage.getItem("bridgeIP")) {
-    const bridgeIP = prompt("enter your bridge IP", 'x.x.x.x')
     localStorage.setItem("bridgeIP", prompt("enter your bridge IP", 'x.x.x.x'))
 }
 if (!localStorage.getItem("bridgeUser")) {

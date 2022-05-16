@@ -24,9 +24,24 @@ class HueBridge {
         */
     }
 
+    sendPutCommand(url, body){
+        console.log('bridge.js sendPutCommand ', url, body)
+
+    }
 
     get groups() {
         return this.sendGetCommand('groups')
+
+        // let result = {}
+        // this.sendGetCommand('groups').then(data => {
+        //     console.log('bridge groups', data)
+        //     for(group in data) {
+        //         result = group
+        //     }
+        // })
+
+        // return result
+
     }
 
     get lights(){

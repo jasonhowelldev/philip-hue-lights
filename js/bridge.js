@@ -8,7 +8,7 @@ class HueBridge {
     }
 
     sendGetCommand = async (api) => {
-        console.log('url ',this.url+api)
+        // console.log('url ',this.url+api)
         let response = await fetch(this.url+api)
         let data = await response.json()
         return data
@@ -31,17 +31,6 @@ class HueBridge {
 
     get groups() {
         return this.sendGetCommand('groups')
-
-        // let result = {}
-        // this.sendGetCommand('groups').then(data => {
-        //     console.log('bridge groups', data)
-        //     for(group in data) {
-        //         result = group
-        //     }
-        // })
-
-        // return result
-
     }
 
     get lights(){

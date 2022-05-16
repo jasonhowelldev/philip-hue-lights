@@ -16,7 +16,7 @@ const bridge = new HueBridge(localStorage.getItem("bridgeIP"), localStorage.getI
 
 
 function getDataFromBridge(){
-
+    clearDisplay()
     console.log(this.name)
 
     // set heading
@@ -49,6 +49,12 @@ function getDataFromBridge(){
 
 }
 
+function clearDisplay(){
+    document.getElementById('responseHeader').innerHTML = ''
+    document.getElementById('tempResponse').innerText = ''
+    document.getElementById('main').innerHTML = ''
+}
+
 function displayGroups(data) {
     document.getElementById('responseHeader').innerHTML = 'Groups'
     document.getElementById('tempResponse').innerText = ''
@@ -72,18 +78,9 @@ function displayLights(data){
 
     for(light in data){
         arrLights.push(new HueLight(data[light],light))
-
-        // just test stuff
-        // console.log('this light ', data[light])
-        // document.getElementById('tempResponse').innerText += data[light].name
-        // document.getElementById('tempResponse').innerText += '\n'
     }
 
-    // console.log('light object test ', arrLights)
-
-    arrLights.forEach(light => {
-        // console.log('each light ', light)  
-        
+    arrLights.forEach(light => {   
         // add html section to contain each light
         const section = document.createElement('section')
         section.classList.add('light')

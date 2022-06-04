@@ -21,18 +21,12 @@ function getDataFromBridge(){
 
     // set heading
     document.getElementById('responseHeader').innerHTML = this.name.replace(this.name[0], this.name[0].toUpperCase())
-
-    // get data from bridge
-    // let result = bridge.groups
-    // console.log('result from getter', result)
-
+    
+    // call method on bridge that corresponds the button clicked's name
     bridge[this.name].then(data => {
-        //console.log('response ',data)
-        
-        // document.getElementById('tempResponse').innerText = JSON.stringify(data)
-        // document.getElementById('tempResponse').innerText = ''
 
         switch(this.name) {
+            // call appropraite function based on what data you expect back from the bridge
             case 'groups' :
                 displayGroups(data)
                 break
@@ -56,9 +50,9 @@ function clearDisplay(){
 }
 
 function displayGroups(data) {
+    clearDisplay()
     document.getElementById('responseHeader').innerHTML = 'Groups'
-    document.getElementById('tempResponse').innerText = ''
-    // get main section
+    // for now, just display group names
     for(const room in data) {
         console.log(data[room])
         // create a new html container that has each group name in it
@@ -68,10 +62,8 @@ function displayGroups(data) {
 }
 
 function displayLights(data){
-    // console.log('lights ', data)
-
+    clearDisplay()
     document.getElementById('responseHeader').innerHTML = 'Lights'
-    document.getElementById('tempResponse').innerText = ''
 
     // create array of light objects using HueLight class
     let arrLights = []
@@ -80,43 +72,33 @@ function displayLights(data){
         arrLights.push(new HueLight(data[light],light))
     }
 
+    // loop through each light and create buttons to control each one
     arrLights.forEach(light => {   
         // add html section to contain each light
         const section = document.createElement('section')
         section.classList.add('light')
-        
-        // add buttons for each light
-        const lightButton = document.createElement('button')
-        lightButton.textContent = light._name
-        lightButton.classList.add('lightName')
-        lightButton.light = light
-        section.append(lightButton)
 
-        // add buttons to quickly set brightness presets
-        for(i=0; i<=100;i+=25){
+        // create an array to hold all possible button values in proper order
+        const buttonValues = ['self','off', 'min', '25','50','75','100','on']
+
+        // loop through that array creating the buttons
+        buttonValues.forEach(value => {
+
             const button = document.createElement('button')
-            button.textContent = i
-            button.classList.add('setBrightness')
+            button.textContent = value
             button.light = light
-            button.addEventListener('click', pressedSetBrightness)
+            button.possibleValues = buttonValues
+            button.value = value
+            button.classList.add('lightName')
+
+            if(value === 'self'){
+                button.textContent = light._name
+            }else{
+                button.addEventListener('click', pressedSetLightPresetStatus)
+            }
+
             section.append(button)
-        }
-
-        // insert button to set the light's minimum brightness level
-        const minButton = document.createElement('button')
-        minButton.textContent = 'min'
-        minButton.classList.add('setBrightness')
-        minButton.light = light
-        minButton.addEventListener('click', pressedSetBrightness)
-        section.insertBefore(minButton, section.children[2])
-
-        // insert button to set the light to be on
-        const onButton = document.createElement('button')
-        onButton.textContent = 'on'
-        onButton.classList.add('setBrightness')
-        onButton.light = light
-        onButton.addEventListener('click', pressedSetBrightness)
-        section.insertBefore(onButton, section.children.lenth)
+        })
 
         document.getElementById('main').append(section)
     })
@@ -124,19 +106,19 @@ function displayLights(data){
 
 }
 
-function pressedSetBrightness(){
-    // console.log('mian > pressedSetBrightness ', this.textContent, this.light)
+function pressedSetLightPresetStatus(){
+    // console.log('mian > pressedSetLightPresetStatus ', this.textContent, this.light)
 
     switch (this.textContent){
-        case '0':
-            this.light.setOn(bridge, false)
-            break
         case 'on':
+            this.light.setOn(bridge, true)
+            break
+        case 'off':
             this.light.setOn(bridge, true)
             break
         case 'min':
             this.light.setBrightness(bridge, 0)
-        
+            break
         case '25':
             this.light.setBrightness(bridge, 63)
             break
@@ -152,7 +134,5 @@ function pressedSetBrightness(){
         default :
             console.log('main > pressedSetBrightness didnt match textConent')
     }
-
-    //this.light.setOn(bridge, true)
 
 }

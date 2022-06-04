@@ -27,12 +27,12 @@ class HueLight {
     }
 
     setBrightness(bridge, bri){
-        // console.log('light.js setBrightness ', bri)
+        console.log('light.js setBrightness ', bri)
         this.sendPutCommand(bridge, '/state', {'bri':bri})
     }
 
     setOn(bridge, state){ // bool
-        // console.log('light.js setOn ', state, bridge)
+        console.log('light.js setOn ', state, bridge)
         this.sendPutCommand(bridge, '/state', {"on":state})
     }
 
